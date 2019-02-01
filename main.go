@@ -23,6 +23,9 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
+	"strconv"
+	"time"
 
 	MQTT "github.com/eclipse/paho.mqtt.golang"
 	"github.com/google/gousb"
@@ -38,8 +41,9 @@ var (
 func start_mqtt() {
 	log.Println("init_mqtt")
 	message_chan = make(chan string, 10)
+	hostname, _ := os.Hostname()
 
-	connOpts := MQTT.NewClientOptions().AddBroker(*server).SetClientID("akai").SetCleanSession(true)
+	connOpts := MQTT.NewClientOptions().AddBroker(*server).SetClientID(hostname + strconv.Itoa(time.Now().Second())).SetCleanSession(true)
 	tlsConfig := &tls.Config{InsecureSkipVerify: true, ClientAuth: tls.NoClientCert}
 	connOpts.SetTLSConfig(tlsConfig)
 
