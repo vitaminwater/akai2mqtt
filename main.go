@@ -49,7 +49,7 @@ func start_mqtt() {
 	}
 	fmt.Printf("Connected to %s\n", *server)
 	for m := range message_chan {
-		client.Publish("akai", 2, false, m)
+		client.Publish("akai", 2, true, m)
 	}
 }
 
